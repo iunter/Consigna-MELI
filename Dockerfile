@@ -10,6 +10,8 @@ ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
 
+RUN sudo apt-get install tk
+
 # Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
 
