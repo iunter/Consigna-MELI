@@ -1,4 +1,3 @@
-from turtle import distance
 import numpy as np
 
 def trilateration(P1, P2, P3, distances):
