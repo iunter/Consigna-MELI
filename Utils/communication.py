@@ -28,6 +28,9 @@ class Communication:
         secondCoordinates = [skywalker.xPosition, skywalker.yPosition, 0]
         thirdCoordinates = [sato.xPosition, sato.yPosition, 0]
         
+        if len(distances) < 3 :
+            return -1
+        
         return trilateration(firstCoordinates, secondCoordinates, thirdCoordinates, distances)
         
     def getMessages(self, messages):
@@ -39,7 +42,7 @@ class Communication:
                     finalMessage[index] = word
         
         if "" in finalMessage:
-            finalMessage = "Could not determine message"
+            finalMessage = -1
             
         return finalMessage
     

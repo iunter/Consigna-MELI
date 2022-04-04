@@ -1,5 +1,4 @@
-from flask_restful import Resource, request, reqparse
-import json
+from flask_restful import Resource, request, reqparse, abort
 import ast
 from Utils.communication import Communication
 from Utils.strings import listToString
@@ -28,6 +27,12 @@ class TopSecret(Resource):
         
         position = communication.getLocation(distances)
         message = communication.getMessages(messages)
+        
+        if message == -1:
+            abort(404, "Could not determine the message")
+            
+        if position == -1:
+            abort(404, "Not enough distances")
         
         print(position[0])
         
