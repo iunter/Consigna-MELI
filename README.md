@@ -23,8 +23,11 @@ Se necesita de algun cliente HTTP libre como por ejemplo "Postman" para poder re
 
 - En caso de que se opte levantar la aplicacion en un entorno local de debera de tener instalado python3
 - Una vez instalado python se deberan correr los siguientes comandos en la carpeta raiz del proyecto:
-  pip install numpy
-  pip install flask-restful
+  #### pip install numpy
+  #### pip install flask-restful
   #### Estos comandos instalaran las librerias necesarias para poder ejecutar el servicio
 - Una vez instalado procederemos a correr el comando "python main.py" para levantar el servicio (desde la carpeta raiz del proyecto) 
 
+![Captura3](https://user-images.githubusercontent.com/18707501/161798422-af28cc39-3693-435a-ba71-cf7f45a3a313.JPG)
+
+  #### La url del servicio será la que figura en la linea que dice "running on http://........"
