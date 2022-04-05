@@ -51,8 +51,8 @@ class TopSecret(Resource):
         if len(position) == 0:
             abort(404, "Could not determine position")
         
-        print(position[0])
-        
+        communication.purge()
+                
         return {
             'position' : { 
                 'x' : position[0],

@@ -1,4 +1,3 @@
-from turtle import position
 from Utils.math import trilateration
 from Clases.satellite import Satellite
 
