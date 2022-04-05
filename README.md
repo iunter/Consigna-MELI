@@ -12,9 +12,19 @@ El servicio esta subido a un servidor de Google Cloud.
 Se necesita de algun cliente HTTP libre como por ejemplo "Postman" para poder realizar consultas al servicio.
 
 - El payload del mensaje se debe enviar en el body del request tal como se ve en la imagen a continuacion
+
+#### Endpoint /topsecret_split/{satelliteName}
+
 ![captura1](https://user-images.githubusercontent.com/18707501/161793265-bc07e483-cc83-4baf-b494-d3987bec1074.JPG)
 
+#### Endpoint /topsecret
+
+![Captura4](https://user-images.githubusercontent.com/18707501/161800033-e854e026-ef3a-44d4-8661-e6545a918d4c.JPG)
+
+![Captura5](https://user-images.githubusercontent.com/18707501/161800043-26c556da-39ce-4fc6-94c6-a857248c2133.JPG)
+
 - Una vez que se encuentre cargada la informacion de las comunicaciones hacia los 3 satelites se obtendra el resultado en el siguiente formato
+
 ![Captura2](https://user-images.githubusercontent.com/18707501/161794471-da4156a2-4087-42b6-bee3-bf7c5250a4c4.JPG)
 
 - Una vez que se obtiene el resultado (ya sea exitoso o no) la informacion se purga, con lo cual se deberan realizar los 3 request nuevamente.
