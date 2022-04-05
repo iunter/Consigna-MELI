@@ -7,6 +7,14 @@ from Utils.strings import listToString
 
 communication = CommunicationManager()
 
+
+def validateMessageAndDistanceInput(messageInput, distanceInput):
+        if type(messageInput) is not list:
+            abort(400, "Message is not a list")
+        
+        if not isinstance(distanceInput, (int, float, complex)) or isinstance(distanceInput, bool):
+            abort(400, "Distance given is not a number")
+
 def getBody():
         data = request.data.decode("utf-8")
         filtered_characters = list(s for s in data if s.isprintable())
@@ -28,31 +36,37 @@ class TopSecret(Resource):
         
         body = getBody()
         
+        if 'satellites' not in body:
+            abort(400, "Could not read data")
+            
+        if type(body['satellites']) is not list:
+            abort(400, "Satellites list expected")
+        
         for satellite in body['satellites']:
             satelliteName = communication.findSatellite(satellite['name'])
             
             #If the satellite have not been found
             if satelliteName == None:
-                abort(404, "Could not find satellite: " + satellite['name'])
-                
+                abort(404, "Could not find satellite: " + satellite['name'])   
+            validateMessageAndDistanceInput(satellite['message'], satellite['distance'])             
             satellites.append(satelliteName)
             distances.append(satellite['distance'])
             messages.append(satellite['message'])
                 
                 
-        communication.satellites = satellites
+        communication.satellitesInUse = satellites
         
         position = communication.getLocation(distances)
         message = communication.getMessages(messages)
+        
+        communication.purge()
         
         if message == None:
             abort(404, "Could not determine the message")
             
         if len(position) == 0:
             abort(404, "Could not determine position")
-        
-        communication.purge()
-                
+                        
         return {
             'position' : { 
                 'x' : position[0],
@@ -76,19 +90,17 @@ class TopSecretSplit(Resource):
         messageInput = body['message']
         distanceInput = body['distance']
             
-        if type(messageInput) is not list:
-            abort(400, "Message is not a list")
-        
-        if not isinstance(distanceInput, (int, float, complex)) or isinstance(distanceInput, bool):
-            abort(400, "Distance given is not a number")
+        validateMessageAndDistanceInput(messageInput, distanceInput)
             
-        communication.addCommWithSatellite(CommWithSatellite(satellite, body['distance'], body['message']))       
+        communication.addCommWithSatellite(CommWithSatellite(satellite, distanceInput, messageInput))       
                 
         return "Communication with satellite: " + satelliteName.upper() + " succesfully added"
     
     def get(self, satelliteName=None):
         
         position, message = communication.getLocationAndMessages()
+        
+        communication.purge()
         
         if len(position) == 0:
             abort(404, "Could not determine position")
